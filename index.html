@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Wedding of Malik & Annisa - Sapphire Edition</title>
+    <title>The Wedding Invitation</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -12,7 +12,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -22,45 +22,19 @@
             theme: {
                 extend: {
                     colors: {
-                        navy: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            300: '#7dd3fc',
-                            500: '#0ea5e9',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e', // Deep Blue
-                            950: '#020617', // Midnight Black/Blue
-                        },
-                        silver: {
-                            light: '#f3f4f6',
-                            DEFAULT: '#cbd5e1',
-                            dark: '#94a3b8',
-                            metallic: '#e2e8f0'
-                        }
+                        dark: { 950: '#020202', 900: '#050505', 800: '#0a0a0a', 700: '#1a1a1a', 600: '#262626' },
+                        gold: { 100: '#F9F1D0', 200: '#F4E4A0', 300: '#D4AF37', 400: '#AA8825', 500: '#8A6E1E', 600: '#4F3E0E' }
                     },
                     fontFamily: {
                         'cinzel': ['"Cinzel Decorative"', 'serif'],
-                        'vibes': ['"Great Vibes"', 'cursive'],
                         'playfair': ['"Playfair Display"', 'serif'],
+                        'vibes': ['"Great Vibes"', 'cursive'],
+                        'montserrat': ['"Montserrat"', 'sans-serif'],
                         'arabic': ['"Amiri"', 'serif'],
-                        'sans': ['"Montserrat"', 'sans-serif'],
                     },
                     backgroundImage: {
-                        'sapphire-gradient': 'linear-gradient(135deg, #020617 0%, #172554 50%, #020617 100%)',
-                        'silver-gradient': 'linear-gradient(45deg, #f1f5f9, #cbd5e1, #94a3b8, #cbd5e1, #f1f5f9)',
-                        'glass-blue': 'linear-gradient(135deg, rgba(30, 58, 138, 0.4), rgba(2, 6, 23, 0.6))',
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 12s linear infinite',
-                        'float': 'float 6s ease-in-out infinite',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-15px)' }
-                        }
+                        'gold-gradient': 'linear-gradient(135deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
+                        'gold-text': 'linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C)',
                     }
                 }
             }
@@ -68,447 +42,386 @@
     </script>
 
     <style>
-        /* --- GLOBAL & RESET --- */
-        html, body {
-            overflow-x: hidden;
-            background-color: #020617; /* Midnight Blue/Black */
-            color: #f1f5f9;
-        }
-
+        /* --- GLOBAL --- */
+        html, body { overflow-x: hidden; background-color: #050505; color: #e5e5e5; }
         body.modal-open { overflow: hidden; height: 100vh; position: fixed; width: 100%; }
 
-        /* --- TYPOGRAPHY EFFECTS --- */
-        .text-silver-gradient {
-            background: linear-gradient(to bottom, #f8fafc 0%, #cbd5e1 40%, #64748b 80%, #f8fafc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+        /* --- TEXT GOLD EFFECTS --- */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-size: 200% auto; animation: shine 4s linear infinite;
         }
-        
-        /* --- BACKGROUND PARTICLES (SILVER DUST) --- */
-        #dust-container {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0; overflow: hidden;
+        @keyframes shine { to { background-position: 200% center; } }
+
+        /* --- PARTICLES --- */
+        #particle-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+        .particle {
+            position: absolute; width: 2px; height: 2px; background-color: #D4AF37;
+            border-radius: 50%; box-shadow: 0 0 4px 1px rgba(212, 175, 55, 0.6);
+            opacity: 0; animation: floatUp linear infinite;
         }
-        
-        .dust {
-            position: absolute;
-            background: radial-gradient(circle, #e2e8f0 0%, transparent 70%);
-            border-radius: 50%;
-            opacity: 0;
-            animation: drift linear infinite;
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        @keyframes drift {
-            0% { transform: translateY(110vh) translateX(0); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        /* --- ANIMATIONS --- */
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* --- DOOR ANIMATION --- */
+        .door-panel {
+            position: absolute; top: 0; width: 50%; height: 100%;
+            background-color: #050505; z-index: 40; transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform;
         }
+        .door-left { left: 0; border-right: 1px solid #4F3E0E; transform-origin: left; background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png'); }
+        .door-right { right: 0; border-left: 1px solid #4F3E0E; transform-origin: right; background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png'); }
+        .door-left::after { content: ''; position: absolute; right: 0; top: 20%; bottom: 20%; width: 2px; background: linear-gradient(to bottom, transparent, #D4AF37, transparent); }
+        .door-right::after { content: ''; position: absolute; left: 0; top: 20%; bottom: 20%; width: 2px; background: linear-gradient(to bottom, transparent, #D4AF37, transparent); }
+        .is-open .door-left { transform: translateX(-100%); }
+        .is-open .door-right { transform: translateX(100%); }
+        .is-open #opening-content { opacity: 0; transform: scale(1.2); pointer-events: none; }
+        #opening-content { transition: opacity 1s ease, transform 1s ease; z-index: 50; }
 
-        /* --- CINEMA SHUTTER ANIMATION (MODIFIED) --- */
-        .curtain-panel {
-            transition: transform 2s cubic-bezier(0.86, 0, 0.07, 1);
-            background: linear-gradient(180deg, #020617 0%, #0f172a 50%, #020617 100%);
-            position: absolute;
-            width: 100%;
-            height: 50%;
-            z-index: 20;
-        }
-        
-        .curtain-top { top: 0; border-bottom: 1px solid #1e293b; }
-        .curtain-bottom { bottom: 0; border-top: 1px solid #1e293b; }
-
-        .is-open .curtain-top { transform: translateY(-100%); }
-        .is-open .curtain-bottom { transform: translateY(100%); }
-
-        /* --- SHAPES --- */
-        .arch-frame {
-            border-radius: 200px 200px 10px 10px;
-        }
-
-        /* --- COMPONENTS --- */
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(203, 213, 225, 0.15);
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.9);
-        }
-
-        /* Custom Scrollbar */
+        /* --- UTILS --- */
         ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 2px; }
-
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 2px; }
+        .glass-dark { background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(212, 175, 55, 0.15); }
+        .text-shadow-sm { text-shadow: 1px 1px 1px rgba(0,0,0,0.8); }
     </style>
 </head>
-<body class="modal-open antialiased selection:bg-silver selection:text-navy-950">
-
-    <!-- WATERMARK CREDIT -->
-    <a href="https://wa.me/6285161141114?text=halo%20saya%20mau%20pesan%20undangan" target="_blank" class="fixed bottom-4 right-4 z-[999] opacity-70 hover:opacity-100 transition-opacity mix-blend-screen cursor-pointer no-underline">
-        <span class="font-cinzel text-[10px] text-silver-DEFAULT tracking-widest border-b border-silver-DEFAULT/30 pb-0.5">@malikfaza</span>
-    </a>
+<body class="modal-open font-montserrat">
 
     <!-- AUDIO -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="https://files.catbox.moe/1skpmc.mp3" type="audio/mp3">
-    </audio>
+    <audio id="bg-music" loop preload="auto"></audio>
 
-    <!-- BG ANIMATION -->
-    <div id="dust-container"></div>
+    <!-- SPARKLE CONTAINER -->
+    <div id="particle-container"></div>
 
-    <!-- === OPENING OVERLAY (CINEMA STYLE) === -->
-    <div id="opening-overlay" class="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden">
-        
-        <!-- Top Shutter -->
-        <div class="curtain-panel curtain-top flex items-end justify-center">
-             <div class="mb-10 opacity-30">
-                 <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-             </div>
+    <!-- === OPENING OVERLAY === -->
+    <div id="opening-overlay" class="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
+        <div class="door-panel door-left flex items-center justify-end">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent opacity-80"></div>
+        </div>
+        <div class="door-panel door-right flex items-center justify-start">
+             <div class="absolute inset-0 bg-gradient-to-l from-black via-transparent to-transparent opacity-80"></div>
         </div>
         
-        <!-- Bottom Shutter -->
-        <div class="curtain-panel curtain-bottom flex items-start justify-center">
-            <div class="mt-10 opacity-30">
-                 <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="1" class="rotate-180"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-        </div>
-
-        <!-- Center Content -->
-        <div id="opening-content" class="relative z-30 flex flex-col items-center justify-center text-center p-8 transition-all duration-700">
-            
-            <div class="relative w-40 h-40 mb-8 animate-float">
-                <div class="absolute inset-0 border border-silver/30 rotate-45"></div>
-                <div class="absolute inset-0 border border-silver/30"></div>
-                <div class="absolute inset-0 flex items-center justify-center bg-navy-950/80 backdrop-blur-sm shadow-[0_0_50px_rgba(30,58,138,0.3)]">
-                    <div class="text-center">
-                        <span class="font-cinzel text-4xl text-silver-gradient">M</span>
-                        <span class="font-vibes text-3xl text-blue-400 mx-1">&</span>
-                        <span class="font-cinzel text-4xl text-silver-gradient">A</span>
-                    </div>
+        <div id="opening-content" class="relative text-center px-6 w-full max-w-md">
+            <div class="mb-8 relative w-44 h-44 mx-auto">
+                <div class="absolute inset-0 rounded-full border border-gold-300/40 animate-[spin-slow_12s_linear_infinite]">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-gold-300 rounded-full shadow-[0_0_10px_#D4AF37]"></div>
+                </div>
+                <div class="absolute inset-3 rounded-full border border-gold-500/60 overflow-hidden shadow-2xl bg-black">
+                    <!-- FOTO SAMPUL -->
+                    <img id="cover-img" src="" class="w-full h-full object-cover opacity-90 hover:scale-110 transition-transform duration-1000">
                 </div>
             </div>
 
-            <h2 class="font-playfair text-lg text-blue-200 tracking-[0.3em] uppercase mb-4">The Wedding of</h2>
+            <p class="font-montserrat text-gold-200 tracking-[0.4em] text-[10px] uppercase mb-4 animate-pulse">The Wedding Of</p>
+            <!-- NAMA PANGGILAN COVER -->
+            <h1 id="cover-names" class="font-cinzel text-5xl md:text-6xl text-gold-gradient mb-10 drop-shadow-[0_4px_15px_rgba(212,175,55,0.4)] leading-tight"></h1>
             
-            <button onclick="openInvitation()" class="group relative px-10 py-3 bg-transparent overflow-hidden rounded-full transition-all duration-300 cursor-pointer border border-silver/30 hover:border-silver/60">
-                <div class="absolute inset-0 w-full h-full bg-blue-900/20 group-hover:bg-blue-800/40 transition-all duration-300"></div>
-                <span class="relative font-cinzel text-xs font-bold tracking-[0.2em] text-silver group-hover:text-white transition-colors uppercase">
-                    Open Invitation
+            <button onclick="openInvitation()" class="group relative px-10 py-3 bg-black/50 overflow-hidden rounded-full transition-all duration-300 border border-gold-500/50 hover:border-gold-300 hover:shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                <div class="absolute inset-0 w-0 bg-gold-gradient transition-all duration-500 ease-out group-hover:w-full opacity-20"></div>
+                <span class="relative font-bold text-gold-100 tracking-[0.2em] text-xs uppercase flex items-center justify-center gap-3">
+                    <svg class="w-4 h-4 text-gold-300" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                    Buka Undangan
                 </span>
             </button>
+            
+            <!-- SECTION NAMA TAMU -->
+            <div class="mt-8">
+                <p class="text-[10px] text-gray-500 italic mb-2">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+                <h3 id="guest-name" class="font-playfair font-bold text-xl md:text-2xl text-gold-300 tracking-wide break-words max-w-[80%] mx-auto drop-shadow-md border-b border-gold-500/20 pb-2 inline-block min-w-[150px]">
+                    <!-- Nama tamu akan muncul disini -->
+                </h3>
+            </div>
         </div>
     </div>
 
     <!-- === MAIN CONTENT === -->
-    <main id="main-content" class="relative w-full opacity-0 transition-opacity duration-[2000ms]">
+    <main id="main-content" class="relative w-full opacity-0 transition-opacity duration-[1500ms] bg-dark-900">
         
         <!-- Music Control -->
-        <div class="fixed top-5 right-5 z-[60]">
-             <button onclick="toggleMusic()" class="w-10 h-10 rounded-full border border-silver/40 bg-navy-900/50 backdrop-blur flex items-center justify-center text-silver shadow-lg hover:bg-silver hover:text-navy-950 transition-all duration-300">
-                <svg id="icon-music" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin-slow"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-            </button>
+        <button onclick="toggleMusic()" class="fixed bottom-6 right-6 z-[60] w-12 h-12 bg-black/80 backdrop-blur text-gold-300 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.3)] hover:scale-110 transition-transform border border-gold-500/30">
+            <svg id="icon-music" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="animate-spin-slow"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+        </button>
+
+        <!-- BACKGROUND TEXTURE -->
+        <div class="fixed inset-0 z-0 pointer-events-none">
+             <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-15"></div>
+             <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black opacity-90"></div>
         </div>
 
-        <!-- STATIC BACKGROUND LAYERS -->
-        <div class="fixed inset-0 z-[-1]">
-             <!-- Base -->
-            <div class="absolute inset-0 bg-[#020617]"></div>
-             <!-- Vignette & Texture -->
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-navy-950 via-[#0f172a] to-navy-950 opacity-90"></div>
-            <!-- Decorative Glow spots -->
-            <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px]"></div>
-            <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-900/10 rounded-full blur-[100px]"></div>
-        </div>
-
-        <!-- HERO SECTION (MODIFIED) -->
-        <section class="min-h-screen flex flex-col items-center justify-center relative px-6 overflow-hidden pt-10">
+        <!-- HERO SECTION -->
+        <section class="min-h-screen flex flex-col items-center justify-center relative px-6 py-20 overflow-hidden z-10">
+            <!-- Hero Image Background -->
+            <div id="hero-bg" class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30 mix-blend-overlay"></div>
             
-            <div class="relative z-10 text-center w-full max-w-2xl" id="hero-content">
-                <div data-aos="fade-down" data-aos-duration="1500" class="mb-8">
-                    <p class="font-sans text-blue-300 tracking-[0.3em] text-[10px] uppercase border-b border-blue-900/50 pb-4 inline-block">The Wedding Celebration</p>
-                </div>
-                
-                <!-- NEW HERO LAYOUT: Framed -->
-                <div class="relative border-y border-silver/20 py-12 md:py-16">
-                     <div class="absolute inset-x-0 top-1 h-px bg-gradient-to-r from-transparent via-silver/30 to-transparent"></div>
-                     <div class="absolute inset-x-0 bottom-1 h-px bg-gradient-to-r from-transparent via-silver/30 to-transparent"></div>
-                     
-                    <h1 class="font-cinzel text-5xl md:text-7xl text-silver-gradient leading-none drop-shadow-2xl" data-aos="zoom-in" data-aos-duration="2000">
-                        Malik <span class="font-vibes text-4xl text-blue-400 font-normal mx-2">&</span> Annisa
-                    </h1>
-                </div>
-
-                <div class="mt-10 space-y-3" data-aos="fade-up" data-aos-delay="500">
-                    <p class="font-playfair text-2xl text-white">Selasa, 10 Maret 2026</p>
-                    <div class="flex items-center justify-center gap-2 text-xs text-blue-300 tracking-widest uppercase opacity-80">
-                        <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-                        Majalengka, Jawa Barat
-                        <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
-                    </div>
-                </div>
-
-                <!-- Boxed Countdown -->
-                <div id="countdown" class="flex flex-wrap justify-center gap-4 mt-16" data-aos="fade-up" data-aos-delay="800">
-                    <!-- JS Injected -->
-                </div>
+            <div class="absolute top-6 left-6 right-6 bottom-6 border border-gold-500/30 z-10 pointer-events-none rounded-none">
+                <div class="absolute top-0 left-0 w-24 h-24 border-t-2 border-l-2 border-gold-300"></div>
+                <div class="absolute top-0 right-0 w-24 h-24 border-t-2 border-r-2 border-gold-300"></div>
+                <div class="absolute bottom-0 left-0 w-24 h-24 border-b-2 border-l-2 border-gold-300"></div>
+                <div class="absolute bottom-0 right-0 w-24 h-24 border-b-2 border-r-2 border-gold-300"></div>
             </div>
 
-            <div class="absolute bottom-8 animate-bounce">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#cbd5e1" stroke-width="1" class="opacity-50"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            <div class="relative z-20 text-center" id="hero-content">
+                <p class="text-gold-200 tracking-[0.5em] text-[10px] uppercase mb-12 font-bold opacity-80" data-aos="fade-down">The Wedding Celebration</p>
+                
+                <!-- NAMA HERO -->
+                <h1 id="hero-names" class="font-cinzel text-5xl md:text-8xl text-gold-gradient mb-2 leading-tight drop-shadow-xl py-2" data-aos="zoom-in" data-aos-duration="1500"></h1>
+                
+                <div class="my-10 flex items-center justify-center gap-4" data-aos="fade-up">
+                    <div class="h-[1px] w-12 bg-gold-400"></div>
+                    <!-- TANGGAL HERO -->
+                    <span id="hero-date" class="font-vibes text-4xl text-gray-200 drop-shadow-md"></span>
+                    <div class="h-[1px] w-12 bg-gold-400"></div>
+                </div>
+
+                <div id="countdown" class="flex flex-wrap justify-center gap-4 text-gold-100" data-aos="fade-up" data-aos-delay="300"></div>
+            </div>
+            
+            <div class="absolute bottom-10 left-0 w-full text-center animate-bounce text-gold-500/70">
+                <span class="text-[10px] tracking-widest uppercase mb-2 block">Scroll Down</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="mx-auto"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
             </div>
         </section>
 
-        <!-- COUPLE (ARCH DESIGN) -->
-        <section class="py-24 px-4 relative">
+        <!-- COUPLE SECTION -->
+        <section class="py-32 px-4 relative z-10 bg-dark-900/90">
             <div class="max-w-5xl mx-auto">
-                <div class="text-center mb-16" data-aos="fade-up">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Basmala.svg" alt="Bismillah" class="h-8 mx-auto mb-6 filter invert opacity-60">
-                    <p class="font-playfair text-blue-100/80 text-sm italic leading-relaxed max-w-xl mx-auto px-4">
-                        "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri..." <br><span class="text-xs text-blue-400 mt-2 block not-italic font-sans tracking-wider">(QS. Ar-Rum: 21)</span>
+                <div class="text-center mb-24" data-aos="fade-up">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/Basmala.svg" alt="Bismillah" class="h-16 mx-auto mb-10 filter invert brightness-200 sepia contrast-75 opacity-90">
+                    <p class="font-arabic text-2xl md:text-3xl text-gold-100 mb-8 leading-loose px-4 drop-shadow-md" dir="rtl">
+                        ومن آياته أن خلق لكم من أنفسكم أزواجا لتسكنوا إليها وجعل بينكم مودة ورحمة إن في ذلك لآيات لقوم يتفكرون
                     </p>
+                    <p class="font-playfair text-gray-300 text-sm md:text-base italic max-w-3xl mx-auto leading-relaxed border-l-2 border-gold-600 pl-6 text-left md:text-center md:border-l-0">
+                        "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang."
+                    </p>
+                    <p class="text-gold-500 text-[10px] tracking-widest font-bold mt-6 uppercase">- QS. AR-RUM: 21 -</p>
                 </div>
 
-                <!-- Couple Grid - Modified to Arch Shapes -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative">
-                    <!-- Groom -->
-                    <div class="text-center group" data-aos="fade-up">
-                        <div class="relative w-64 h-80 mx-auto mb-6">
-                            <!-- Arch Frame -->
-                            <div class="absolute inset-0 border border-silver/30 arch-frame translate-x-2 translate-y-2 transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0"></div>
-                            <div class="absolute inset-0 border border-silver/50 arch-frame -translate-x-2 -translate-y-2 transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0 bg-navy-800 overflow-hidden">
-                                <img src="https://img.freepik.com/premium-vector/premium-highquality-cartoon-design-part-11_768745-426.jpg?semt=ais_hybrid&w=740&q=80" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" alt="Groom">
-                            </div>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-16 md:gap-32">
+                    <!-- GROOM -->
+                    <div class="text-center group" data-aos="fade-right">
+                        <div class="relative w-56 h-56 mx-auto mb-8">
+                            <div class="absolute inset-0 rounded-full border border-gold-500 opacity-40 scale-110 group-hover:scale-125 transition-transform duration-700"></div>
+                            <div class="absolute inset-0 rounded-full border border-dashed border-gold-300 opacity-60 animate-[spin-slow_20s_linear_infinite]"></div>
+                            <img id="groom-img" src="" class="w-full h-full object-cover rounded-full border-2 border-gold-400 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
                         </div>
-                        <h3 class="font-cinzel text-2xl text-silver mb-1">Malik Faza</h3>
-                        <p class="font-sans text-[10px] text-blue-300 uppercase tracking-[0.2em]">The Groom</p>
+                        <h3 id="groom-name" class="font-cinzel text-3xl text-gold-gradient mb-2"></h3>
+                        <p id="groom-child-of" class="text-gray-400 text-xs font-bold tracking-[0.2em] uppercase mb-1"></p>
+                        <p id="groom-parents" class="font-playfair text-xl text-gray-300 italic"></p>
                     </div>
 
-                    <!-- Bride -->
-                    <div class="text-center group" data-aos="fade-up" data-aos-delay="100">
-                         <div class="relative w-64 h-80 mx-auto mb-6">
-                             <!-- Arch Frame -->
-                            <div class="absolute inset-0 border border-silver/30 arch-frame translate-x-2 translate-y-2 transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0"></div>
-                            <div class="absolute inset-0 border border-silver/50 arch-frame -translate-x-2 -translate-y-2 transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0 bg-navy-800 overflow-hidden">
-                                <img src="https://img.freepik.com/premium-vector/chibi-cute-kawaii-character-cartoon-illustration-teacher-muslim-hijab-girl-holding-book_161819-762.jpg?w=360" class="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" alt="Bride">
-                            </div>
+                    <div class="hidden md:block w-px h-64 bg-gradient-to-b from-transparent via-gold-500 to-transparent opacity-40"></div>
+
+                    <!-- BRIDE -->
+                    <div class="text-center group" data-aos="fade-left">
+                        <div class="relative w-56 h-56 mx-auto mb-8">
+                            <div class="absolute inset-0 rounded-full border border-gold-500 opacity-40 scale-110 group-hover:scale-125 transition-transform duration-700"></div>
+                            <div class="absolute inset-0 rounded-full border border-dashed border-gold-300 opacity-60 animate-[spin-slow_20s_linear_infinite_reverse]"></div>
+                            <img id="bride-img" src="" class="w-full h-full object-cover rounded-full border-2 border-gold-400 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
                         </div>
-                        <h3 class="font-cinzel text-2xl text-silver mb-1">Annisa Sholiha</h3>
-                        <p class="font-sans text-[10px] text-blue-300 uppercase tracking-[0.2em]">The Bride</p>
+                        <h3 id="bride-name" class="font-cinzel text-3xl text-gold-gradient mb-2"></h3>
+                        <p id="bride-child-of" class="text-gray-400 text-xs font-bold tracking-[0.2em] uppercase mb-1"></p>
+                        <p id="bride-parents" class="font-playfair text-xl text-gray-300 italic"></p>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- EVENT INFO (VERTICAL TIMELINE) -->
-        <section class="py-20 relative bg-[#0B1221]">
-            <div class="max-w-3xl mx-auto px-6 relative">
-                <!-- Center Line -->
-                <div class="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-blue-500/30 to-transparent -translate-x-1/2 hidden md:block"></div>
-
-                <div class="text-center mb-16 relative z-10" data-aos="fade-up">
-                    <span class="bg-[#0B1221] px-4 font-cinzel text-3xl text-silver-gradient">The Events</span>
-                </div>
-
-                <div class="space-y-12">
-                    
-                    <!-- Akad -->
-                    <div class="relative flex flex-col md:flex-row items-center gap-8 group" data-aos="fade-up">
-                        <div class="flex-1 md:text-right order-2 md:order-1">
-                            <h3 class="font-cinzel text-2xl text-white mb-2">Akad Nikah</h3>
-                            <p class="text-blue-200 text-sm leading-relaxed mb-4">
-                                Momen pengucapan janji suci.
-                            </p>
-                            <div class="inline-block border border-silver/20 px-4 py-2 rounded-sm bg-navy-900/30">
-                                <p class="font-playfair text-silver text-sm">08:00 WIB - Selesai</p>
-                            </div>
-                        </div>
-                        
-                        <!-- Timeline Dot -->
-                        <div class="order-1 md:order-2 w-4 h-4 rounded-full bg-blue-500 border-4 border-[#0B1221] shadow-[0_0_10px_#3b82f6] relative z-10"></div>
-                        
-                        <div class="flex-1 md:text-left order-3">
-                            <p class="font-bold text-white text-sm">Kediaman Mempelai Wanita</p>
-                            <p class="text-xs text-blue-300/70 mt-1">Ds. Kertasari, Kec. Kertajati, Majalengka</p>
-                             <div class="mt-4">
-                                <a href="https://maps.google.com" target="_blank" class="text-[10px] text-blue-400 hover:text-white uppercase tracking-wider border-b border-blue-400/30 pb-0.5 transition-colors">Lihat Lokasi</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Resepsi -->
-                    <div class="relative flex flex-col md:flex-row items-center gap-8 group" data-aos="fade-up">
-                        <div class="flex-1 md:text-right order-2 md:order-1 md:hidden"> <!-- Mobile View logic swapped -->
-                             <p class="font-bold text-white text-sm">Kediaman Mempelai Wanita</p>
-                             <p class="text-xs text-blue-300/70 mt-1">Ds. Kertasari, Kec. Kertajati, Majalengka</p>
-                        </div>
-                         <div class="flex-1 md:text-right order-2 md:order-1 hidden md:block">
-                             <p class="font-bold text-white text-sm">Kediaman Mempelai Wanita</p>
-                             <p class="text-xs text-blue-300/70 mt-1">Ds. Kertasari, Kec. Kertajati, Majalengka</p>
-                              <div class="mt-4">
-                                <a href="https://maps.google.com" target="_blank" class="text-[10px] text-blue-400 hover:text-white uppercase tracking-wider border-b border-blue-400/30 pb-0.5 transition-colors">Lihat Lokasi</a>
-                            </div>
-                        </div>
-
-                        <!-- Timeline Dot -->
-                        <div class="order-1 md:order-2 w-4 h-4 rounded-full bg-cyan-500 border-4 border-[#0B1221] shadow-[0_0_10px_#06b6d4] relative z-10"></div>
-                        
-                        <div class="flex-1 md:text-left order-3">
-                            <h3 class="font-cinzel text-2xl text-white mb-2">Resepsi</h3>
-                            <p class="text-blue-200 text-sm leading-relaxed mb-4">
-                                Acara ramah tamah dan syukuran.
-                            </p>
-                            <div class="inline-block border border-silver/20 px-4 py-2 rounded-sm bg-navy-900/30">
-                                <p class="font-playfair text-silver text-sm">11:00 WIB - Selesai</p>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- GALLERY -->
-        <section class="py-24 relative overflow-hidden">
-             <div class="max-w-6xl mx-auto px-4">
-                <div class="text-center mb-12">
-                     <span class="font-vibes text-3xl text-blue-400">Captured Moments</span>
+        <!-- EVENT DETAILS -->
+        <section class="py-24 px-4 relative z-10">
+            <div id="event-bg" class="absolute inset-0 bg-fixed bg-cover bg-center opacity-10"></div>
+            
+            <div class="max-w-4xl mx-auto relative z-10">
+                <h2 class="font-cinzel text-4xl md:text-5xl text-center text-gold-gradient mb-16" data-aos="zoom-in">Save The Date</h2>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Akad Card -->
+                    <div class="glass-dark p-10 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-500 group relative overflow-hidden" data-aos="fade-up">
+                        <div class="absolute top-0 left-0 w-full h-0.5 bg-gold-gradient transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                        <div class="w-14 h-14 mx-auto mb-6 text-gold-300 bg-black/30 rounded-full flex items-center justify-center border border-gold-500/30">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                        </div>
+                        <h3 class="font-playfair text-3xl text-white mb-2 italic tracking-wide">Akad Nikah</h3>
+                        <div class="w-12 h-px bg-gold-500 mx-auto mb-5"></div>
+                        <p id="akad-date" class="font-montserrat font-bold text-gold-200 mb-2"></p>
+                        <p id="akad-time" class="font-light text-base text-gray-300 mb-6"></p>
+                        <div class="border-t border-gray-700/50 pt-4">
+                            <p class="text-xs text-gold-500 uppercase tracking-widest mb-1 font-bold">Lokasi</p>
+                            <p id="akad-location" class="text-sm text-gray-300 leading-relaxed"></p>
+                        </div>
+                    </div>
+
+                    <!-- Resepsi Card -->
+                    <div class="glass-dark p-10 rounded-lg text-center transform hover:-translate-y-2 transition-transform duration-500 group relative overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="absolute top-0 left-0 w-full h-0.5 bg-gold-gradient transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                        <div class="w-14 h-14 mx-auto mb-6 text-gold-300 bg-black/30 rounded-full flex items-center justify-center border border-gold-500/30">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        </div>
+                        <h3 class="font-playfair text-3xl text-white mb-2 italic tracking-wide">Resepsi</h3>
+                        <div class="w-12 h-px bg-gold-500 mx-auto mb-5"></div>
+                        <p id="resepsi-date" class="font-montserrat font-bold text-gold-200 mb-2"></p>
+                        <p id="resepsi-time" class="font-light text-base text-gray-300 mb-6"></p>
+                         <div class="border-t border-gray-700/50 pt-4">
+                            <p class="text-xs text-gold-500 uppercase tracking-widest mb-1 font-bold">Lokasi</p>
+                            <p id="resepsi-location" class="text-sm text-gray-300 leading-relaxed"></p>
+                        </div>
+                    </div>
                 </div>
-                
-                <!-- Mosaic Grid - Rounded Corners & Gap Tweak -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[200px]">
-                    <!-- Large item -->
-                    <div class="col-span-2 row-span-2 relative overflow-hidden group cursor-pointer rounded-2xl border border-white/5" data-aos="fade-in">
-                        <img src="https://img.freepik.com/premium-photo/chibi-cartoon-muslim-wedding-couple-ai-generated-image_316488-7875.jpg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0" alt="Couple 1">
-                        <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-transparent to-transparent opacity-80"></div>
-                    </div>
-                    
-                    <!-- Small items -->
-                    <div class="col-span-1 row-span-2 relative overflow-hidden group cursor-pointer rounded-2xl border border-white/5" data-aos="fade-in" data-aos-delay="100">
-                        <img src="https://img.freepik.com/premium-vector/premium-highquality-cartoon-design-part-11_768745-426.jpg?semt=ais_hybrid&w=740&q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0" alt="Couple 2">
-                    </div>
-                    
-                    <div class="col-span-1 row-span-1 relative overflow-hidden group cursor-pointer rounded-2xl border border-white/5" data-aos="fade-in" data-aos-delay="200">
-                        <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1000" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0" alt="Decoration">
-                    </div>
-                    
-                    <div class="col-span-1 row-span-1 relative overflow-hidden group cursor-pointer rounded-2xl border border-white/5" data-aos="fade-in" data-aos-delay="300">
-                        <img src="https://img.freepik.com/premium-vector/chibi-cute-kawaii-character-cartoon-illustration-teacher-muslim-hijab-girl-holding-book_161819-762.jpg?w=360" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale-[20%] group-hover:grayscale-0" alt="Bride 2">
-                    </div>
+
+                <div class="mt-16 text-center" data-aos="fade-up">
+                    <a id="maps-link" href="#" target="_blank" class="inline-block px-12 py-4 bg-transparent border border-gold-400 text-gold-300 font-bold uppercase tracking-[0.2em] text-xs hover:bg-gold-500 hover:text-black transition-all shadow-[0_0_25px_rgba(212,175,55,0.15)] rounded-sm">
+                        Lihat Peta Lokasi
+                    </a>
                 </div>
             </div>
+        </section>
+
+        <!-- SPECIAL INFO (Turut Mengundang & Hiburan) -->
+        <section id="special-info" class="py-12 px-4 relative z-10 bg-dark-900 border-y border-gold-900/30 hidden">
+             <div class="max-w-3xl mx-auto text-center">
+                 <!-- Turut Mengundang -->
+                 <div id="turut-mengundang-container" class="mb-12 hidden" data-aos="fade-up">
+                     <h3 class="font-cinzel text-xl text-gold-400 mb-6">Turut Mengundang</h3>
+                     <div id="turut-mengundang-list" class="space-y-2 text-sm text-gray-300 font-montserrat"></div>
+                 </div>
+                 
+                 <!-- Hiburan -->
+                 <div id="hiburan-container" class="hidden" data-aos="fade-up">
+                    <h3 class="font-cinzel text-xl text-gold-400 mb-6">Special Performance</h3>
+                    <div class="glass-dark p-6 rounded-lg inline-block border border-gold-500/20">
+                         <p id="hiburan-text" class="text-gold-100 font-playfair italic text-lg"></p>
+                    </div>
+                 </div>
+             </div>
         </section>
 
         <!-- GIFT & RSVP -->
-        <section class="py-24 px-4 bg-gradient-to-t from-navy-950 to-[#0f172a]">
-            <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12">
-                
-                <!-- Digital Envelope -->
-                <div data-aos="fade-right">
-                    <h2 class="font-cinzel text-3xl text-silver mb-6 border-b border-silver/20 pb-4 inline-block">Wedding Gift</h2>
-                    <p class="font-playfair text-blue-200 mb-8 text-sm leading-relaxed">
-                        Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih Anda, kami menerima kado secara cashless.
-                    </p>
+        <section class="py-24 px-4 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Wedding Gift -->
+                <div class="mb-24 text-center" data-aos="fade-up">
+                    <h2 class="font-cinzel text-3xl text-gold-gradient mb-6">Wedding Gift</h2>
+                    <p class="font-montserrat text-gray-300 mb-10 text-sm max-w-lg mx-auto leading-relaxed">Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless.</p>
                     
-                    <div class="space-y-4">
-                        <!-- Card Style Bank Info: DANA (Dark with Blue Accent) -->
-                        <div class="relative bg-gradient-to-r from-[#0f172a] to-[#1e293b] p-6 rounded-xl border border-silver/30 border-l-4 border-l-[#118EEA] shadow-[0_0_15px_rgba(17,142,234,0.05)] hover:shadow-[0_0_20px_rgba(17,142,234,0.15)] transition-all duration-300 group overflow-hidden">
-                            <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#118EEA]/5 rounded-full group-hover:bg-[#118EEA]/10 transition-colors"></div>
-                            
-                            <div class="flex justify-between items-start mb-6">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png" class="h-6 filter grayscale brightness-200" alt="DANA">
-                                <span class="font-mono text-[#118EEA] text-xs font-bold tracking-widest">DEBIT</span>
-                            </div>
-                            
-                            <div class="flex justify-between items-end">
-                                <div>
-                                    <p class="font-mono text-xl text-white tracking-widest mb-1">0851 6114 1114</p>
-                                    <p class="font-sans text-xs text-blue-200 uppercase tracking-widest">a.n Malik Faza</p>
-                                </div>
-                                <button onclick="copyToClipboard('085161141114', 'DANA')" class="text-silver hover:text-white transition-colors cursor-pointer">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                                </button>
-                            </div>
+                    <div class="grid md:grid-cols-2 gap-8 px-4 md:px-0">
+                        <!-- Card 1 -->
+                        <div class="relative aspect-[1.586/1] bg-gradient-to-br from-[#1a1a1a] to-black rounded-xl overflow-hidden border border-gold-500/40 shadow-2xl group hover:scale-105 transition-transform duration-500">
+                             <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+                             <div class="relative h-full p-6 flex flex-col justify-between z-10 text-left">
+                                 <div class="flex justify-between items-start">
+                                     <!-- BANK LOGO 1 -->
+                                     <h3 id="bank1-name" class="font-bold text-lg text-white tracking-widest uppercase">BANK</h3>
+                                     <div class="w-10 h-8 bg-gold-400/50 rounded flex items-center justify-center border border-gold-300"><div class="w-8 h-6 border border-black/30"></div></div>
+                                 </div>
+                                 <div class="mt-2">
+                                     <p id="bank1-number" class="font-mono text-xl md:text-2xl text-gold-100 tracking-[0.15em] drop-shadow-md text-shadow-sm"></p>
+                                 </div>
+                                 <div class="flex justify-between items-end">
+                                     <div>
+                                         <p class="text-[7px] md:text-[8px] text-gray-400 uppercase tracking-widest mb-1">Card Holder</p>
+                                         <p id="bank1-owner" class="font-montserrat font-bold text-sm md:text-base text-gray-200 uppercase tracking-widest text-shadow-sm"></p>
+                                     </div>
+                                     <button onclick="copyBank1()" class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold-500/30 hover:bg-gold-500 hover:text-black text-gold-300 transition-all text-[10px] uppercase font-bold tracking-widest bg-black/50">
+                                         <span>Salin</span>
+                                     </button>
+                                 </div>
+                             </div>
                         </div>
-
-                         <!-- Card Style Bank Info: SeaBank (Dark with Orange Accent) -->
-                         <div class="relative bg-gradient-to-r from-[#0f172a] to-[#1e293b] p-6 rounded-xl border border-silver/30 border-l-4 border-l-[#FF5500] shadow-[0_0_15px_rgba(255,85,0,0.05)] hover:shadow-[0_0_20px_rgba(255,85,0,0.15)] transition-all duration-300 group overflow-hidden">
-                             <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#FF5500]/5 rounded-full group-hover:bg-[#FF5500]/10 transition-colors"></div>
-                            <div class="flex justify-between items-start mb-6">
-                                <span class="text-white font-bold italic tracking-tighter text-xl">SeaBank</span>
-                                <span class="font-mono text-[#FF5500] text-xs font-bold tracking-widest">SAVINGS</span>
-                            </div>
-                            
-                             <div class="flex justify-between items-end">
-                                <div>
-                                    <p class="font-mono text-xl text-white tracking-widest mb-1">9016 4283 9446</p>
-                                    <p class="font-sans text-xs text-blue-200 uppercase tracking-widest">a.n Annisa Sholiha</p>
-                                </div>
-                                <button onclick="copyToClipboard('901642839446', 'SeaBank')" class="text-silver hover:text-white transition-colors cursor-pointer">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                                </button>
-                            </div>
+                        
+                        <!-- Card 2 -->
+                        <div class="relative aspect-[1.586/1] bg-gradient-to-bl from-[#1a1a1a] to-black rounded-xl overflow-hidden border border-gold-500/40 shadow-2xl group hover:scale-105 transition-transform duration-500">
+                             <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')]"></div>
+                             <div class="relative h-full p-6 flex flex-col justify-between z-10 text-left">
+                                 <div class="flex justify-between items-start">
+                                     <!-- BANK LOGO 2 -->
+                                     <h3 id="bank2-name" class="font-bold text-lg text-white tracking-widest uppercase">BANK</h3>
+                                     <div class="w-10 h-8 bg-gold-400/50 rounded flex items-center justify-center border border-gold-300"><div class="w-8 h-6 border border-black/30"></div></div>
+                                 </div>
+                                 <div class="mt-2">
+                                     <p id="bank2-number" class="font-mono text-xl md:text-2xl text-gold-100 tracking-[0.15em] drop-shadow-md text-shadow-sm"></p>
+                                 </div>
+                                 <div class="flex justify-between items-end">
+                                     <div>
+                                         <p class="text-[7px] md:text-[8px] text-gray-400 uppercase tracking-widest mb-1">Card Holder</p>
+                                         <p id="bank2-owner" class="font-montserrat font-bold text-sm md:text-base text-gray-200 uppercase tracking-widest text-shadow-sm"></p>
+                                     </div>
+                                     <button onclick="copyBank2()" class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold-500/30 hover:bg-gold-500 hover:text-black text-gold-300 transition-all text-[10px] uppercase font-bold tracking-widest bg-black/50">
+                                         <span>Salin</span>
+                                     </button>
+                                 </div>
+                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- RSVP Form -->
-                <div class="glass-dark p-8 rounded-sm border border-navy-800" data-aos="fade-left">
-                    <h2 class="font-cinzel text-3xl text-silver mb-2">RSVP</h2>
-                    <p class="text-blue-300 text-xs mb-8 uppercase tracking-widest">Mohon konfirmasi kehadiran anda</p>
-
-                    <form onsubmit="sendToWhatsApp(event)" class="space-y-5">
-                        <div class="relative">
-                            <input type="text" id="name" class="peer w-full bg-transparent border-b border-navy-700 py-2 text-white focus:outline-none focus:border-silver transition-colors placeholder-transparent" placeholder="Name" required>
-                            <label for="name" class="absolute left-0 -top-3.5 text-silver text-xs transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-blue-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-silver peer-focus:text-xs">Nama Lengkap</label>
-                        </div>
+                <div class="glass-dark p-8 md:p-12 border border-gold-500/20 rounded-lg relative overflow-hidden" data-aos="fade-up">
+                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gradient-to-r from-transparent via-gold-500 to-transparent"></div>
+                    
+                    <div class="relative z-10">
+                        <h2 class="font-cinzel text-3xl text-center text-gold-gradient mb-4">RSVP</h2>
+                        <p class="text-center text-gray-400 text-sm mb-10">Mohon konfirmasi kehadiran Anda untuk membantu kami mempersiapkan acara.</p>
                         
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="relative">
-                                <select id="status" class="w-full bg-navy-900/50 border border-navy-700 rounded-sm px-3 py-2 text-white focus:border-silver outline-none text-sm appearance-none">
-                                    <option value="Hadir">Hadir</option>
-                                    <option value="Tidak Hadir">Tidak Hadir</option>
-                                    <option value="Ragu">Masih Ragu</option>
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-silver">
-                                    <svg class="fill-current h-4 w-4" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        <form id="rsvp-form" onsubmit="sendToWhatsApp(event)" class="space-y-6 text-left max-w-xl mx-auto">
+                            <div class="group">
+                                <label class="text-[10px] font-bold text-gold-500 uppercase tracking-widest ml-1">Nama Lengkap</label>
+                                <input type="text" id="name" required class="w-full bg-black/60 border border-gray-700 px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors placeholder-gray-600 mt-2 rounded-sm" placeholder="Nama Anda">
+                            </div>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <label class="text-[10px] font-bold text-gold-500 uppercase tracking-widest ml-1">Kehadiran</label>
+                                    <select id="status" class="w-full bg-black/60 border border-gray-700 px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors mt-2 rounded-sm">
+                                        <option value="Hadir" class="bg-dark-900">Hadir</option>
+                                        <option value="Tidak Hadir" class="bg-dark-900">Berhalangan</option>
+                                        <option value="Ragu" class="bg-dark-900">Masih Ragu</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-gold-500 uppercase tracking-widest ml-1">Jumlah</label>
+                                    <select id="pax" class="w-full bg-black/60 border border-gray-700 px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors mt-2 rounded-sm">
+                                        <option value="1" class="bg-dark-900">1 Orang</option>
+                                        <option value="2" class="bg-dark-900">2 Orang</option>
+                                        <option value="3" class="bg-dark-900">3 Orang</option>
+                                        <option value="4" class="bg-dark-900">4 Orang</option>
+                                    </select>
                                 </div>
                             </div>
-                            <div class="relative">
-                                <select id="pax" class="w-full bg-navy-900/50 border border-navy-700 rounded-sm px-3 py-2 text-white focus:border-silver outline-none text-sm appearance-none">
-                                    <option value="1">1 Orang</option>
-                                    <option value="2">2 Orang</option>
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-silver">
-                                    <svg class="fill-current h-4 w-4" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                                </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-gold-500 uppercase tracking-widest ml-1">Ucapan & Doa</label>
+                                <textarea id="message" rows="3" required class="w-full bg-black/60 border border-gray-700 px-4 py-3 text-white focus:outline-none focus:border-gold-500 transition-colors placeholder-gray-600 mt-2 rounded-sm" placeholder="Berikan ucapan selamat..."></textarea>
                             </div>
-                        </div>
-
-                        <div class="relative">
-                            <textarea id="message" rows="3" class="peer w-full bg-transparent border-b border-navy-700 py-2 text-white focus:outline-none focus:border-silver transition-colors placeholder-transparent" placeholder="Message" required></textarea>
-                            <label for="message" class="absolute left-0 -top-3.5 text-silver text-xs transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-blue-400 peer-placeholder-shown:top-2 peer-focus:-top-3.5 peer-focus:text-silver peer-focus:text-xs">Ucapan & Doa</label>
-                        </div>
-
-                        <button type="submit" class="w-full py-4 border border-silver/50 text-silver font-bold uppercase tracking-[0.2em] hover:bg-silver hover:text-navy-950 transition-all duration-300 shadow-[0_0_15px_rgba(203,213,225,0.1)] hover:shadow-[0_0_25px_rgba(203,213,225,0.4)] cursor-pointer">
-                            Kirim Pesan
-                        </button>
-                    </form>
+                            <button type="submit" class="w-full bg-gradient-to-r from-gold-600 to-gold-400 text-white py-4 font-bold tracking-[0.2em] hover:brightness-110 transition-all mt-4 uppercase text-xs border border-gold-300/50 rounded-sm shadow-lg">
+                                Konfirmasi via WhatsApp
+                            </button>
+                        </form>
+                    </div>
                 </div>
-
             </div>
         </section>
 
         <!-- FOOTER -->
-        <footer class="bg-[#020617] pt-16 pb-10 text-center border-t border-navy-900 relative">
-            <h2 class="font-cinzel text-3xl text-silver-gradient mb-4">Malik & Annisa</h2>
-            <p class="font-playfair text-blue-300 italic text-sm mb-10">Terima kasih atas doa dan restu Anda.</p>
+        <footer class="bg-dark-950 py-16 text-center relative z-10 border-t border-gray-900">
+            <div class="opacity-60 mb-8">
+                <span id="footer-groom" class="font-cinzel text-xl text-gold-500"></span>
+                <span class="mx-2 text-gray-600">&</span>
+                <span id="footer-bride" class="font-cinzel text-xl text-gold-500"></span>
+            </div>
+            <h2 id="footer-names" class="font-vibes text-4xl text-gray-500 mb-4"></h2>
+            <p class="text-[10px] text-gray-500 uppercase tracking-[0.3em]">&copy; 2026. Mohon Doa Restu.</p>
             
-            <a href="#" class="text-[10px] text-blue-500 uppercase tracking-widest hover:text-silver transition-colors">
-                Midnight Sapphire Luxury Edition
-            </a>
+            <div class="mt-12 pt-8 border-t border-gray-900 w-32 mx-auto flex justify-center">
+                 <a href="https://malikfazakatalog.pages.dev/" target="_blank" class="text-gray-600 hover:text-gold-500 transition-colors text-[10px] flex items-center gap-2">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7h-9"></path><path d="M14 17H5"></path><circle cx="17" cy="17" r="3"></circle><circle cx="7" cy="7" r="3"></circle></svg>
+                     Malikfaza Studio
+                 </a>
+            </div>
         </footer>
 
     </main>
@@ -516,35 +429,213 @@
     <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
-        // --- SILVER DUST PARTICLES ---
-        function createDust() {
-            const container = document.getElementById('dust-container');
-            const count = 50; 
+        // ==========================================
+        //  AREA EDIT DATA (SUDAH DIREVISI)
+        // ==========================================
+        
+        const DATA_UNDANGAN = {
+            // --- MUSIK ---
+            audioUrl: "https://files.catbox.moe/1skpmc.mp3", 
+            
+            // --- PASANGAN PENGANTIN ---
+            pria: {
+                namaLengkap: "Abdul Waris",
+                namaPanggilan: "Waris",
+                inisial: "W",
+                namaOrangTua: "Bapak Miskam Abdurrohim (Alm) & Ibu Neneng Maftuchah",
+                anakKe: "Putra Kedua",
+                foto: "https://img.freepik.com/premium-vector/premium-highquality-cartoon-design-part-11_768745-426.jpg?semt=ais_hybrid&w=740&q=80" 
+            },
+            wanita: {
+                namaLengkap: "Farhah Rufaedah",
+                namaPanggilan: "Farhah",
+                inisial: "F",
+                namaOrangTua: "Bapak Hasan Arifin (Alm) & Ibu Rahmawati",
+                anakKe: "Putri Pertama",
+                foto: "https://img.freepik.com/premium-vector/chibi-cute-kawaii-character-cartoon-illustration-teacher-muslim-hijab-girl-holding-book_161819-762.jpg?w=360"
+            },
+            
+            // --- FOTO LAIN ---
+            fotoSampul: "https://img.freepik.com/premium-photo/chibi-cartoon-muslim-wedding-couple-ai-generated-image_316488-7875.jpg",
+            backgroundHero: "https://images.unsplash.com/photo-1511285560982-1351c4f8c31b?q=80&w=2000",
+            backgroundEvent: "https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=2000",
 
-            for (let i = 0; i < count; i++) {
-                const dust = document.createElement('div');
-                dust.classList.add('dust');
-                
-                const size = Math.random() * 3 + 1; // 1px to 4px
-                dust.style.width = `${size}px`;
-                dust.style.height = `${size}px`;
-                
-                const left = Math.random() * 100;
-                const duration = Math.random() * 10 + 10; // 10s to 20s
-                const delay = Math.random() * 5;
+            // --- WAKTU ACARA ---
+            tanggalAcara: "2025-12-27", 
+            targetWaktuCountdown: "2025-12-27T09:00:00+07:00", 
+            
+            akad: {
+                tanggal: "Sabtu, 27 Desember 2025",
+                jam: "09.00 WIB - Selesai",
+                lokasi: "Dikediaman Mempelai Wanita<br>Jln Angkasa Raya Penggung Utara RT 005/010<br>Kel Harjamukti Kec Harjamukti No:42"
+            },
+            
+            resepsi: {
+                tanggal: "Ahad, 28 Desember 2025",
+                jam: "10.00 WIB - Selesai",
+                lokasi: "Dikediaman Mempelai Pria<br>Desa Cibuntu Dusun Tarikolot RT 011 RW 006<br>Kec Cigandamekar Kab Kuningan"
+            },
+            
+            // Link map disesuaikan
+            petaLink: "https://maps.app.goo.gl/qLyBbcBrjPkgJ7JL6?g_st=awb",
 
-                dust.style.left = `${left}%`;
-                dust.style.animationDuration = `${duration}s`;
-                dust.style.animationDelay = `${delay}s`;
-                
-                container.appendChild(dust);
+            // --- INFO TAMBAHAN (BARU) ---
+            turutMengundang: [
+                "Keluarga Besar Pengasuh Pp Al-Kautsar Cilimus",
+                "KAISAR ( Keluarga Alumni & Santri Al-Kautsar Cilimus )"
+            ],
+            hiburan: "Sholawat Gambus Syubbanul Mukhtar Cilimus<br>Pimpinan : Kg Waris",
+
+            // --- REKENING HADIAH ---
+            bank1: {
+                namaBank: "BRI", 
+                nomorRekening: "427001014338501",
+                atasNama: "Abdul Waris"
+            },
+            bank2: {
+                namaBank: "DANA", 
+                nomorRekening: "083140955335",
+                atasNama: "Abdul Waris"
+            },
+
+            // --- NOMOR WA UNTUK RSVP ---
+            nomorWhatsApp: "6283140955335",
+
+            // --- NOMOR WA ADMIN (PEMBUAT UNDANGAN) ---
+            nomorAdmin: "6285161141114" 
+        };
+
+        // ==========================================
+        //  AKHIR AREA EDIT
+        // ==========================================
+
+        // --- RENDER CONTENT FUNCTION ---
+        function renderInvitation() {
+            // Title & Audio
+            document.title = `The Wedding of ${DATA_UNDANGAN.pria.namaPanggilan} & ${DATA_UNDANGAN.wanita.namaPanggilan}`;
+            document.getElementById('bg-music').src = DATA_UNDANGAN.audioUrl;
+            
+            // Cover Opening
+            document.getElementById('cover-img').src = DATA_UNDANGAN.fotoSampul;
+            document.getElementById('cover-names').innerHTML = `${DATA_UNDANGAN.pria.namaPanggilan} <br>&<br> ${DATA_UNDANGAN.wanita.namaPanggilan}`;
+            
+            // Hero Section
+            document.getElementById('hero-bg').style.backgroundImage = `url('${DATA_UNDANGAN.backgroundHero}')`;
+            document.getElementById('hero-names').innerText = `${DATA_UNDANGAN.pria.namaPanggilan} & ${DATA_UNDANGAN.wanita.namaPanggilan}`;
+            document.getElementById('hero-date').innerText = DATA_UNDANGAN.akad.tanggal;
+            
+            // Couple Section
+            document.getElementById('groom-img').src = DATA_UNDANGAN.pria.foto;
+            document.getElementById('groom-name').innerText = DATA_UNDANGAN.pria.namaLengkap;
+            document.getElementById('groom-child-of').innerText = DATA_UNDANGAN.pria.anakKe;
+            document.getElementById('groom-parents').innerText = DATA_UNDANGAN.pria.namaOrangTua;
+
+            document.getElementById('bride-img').src = DATA_UNDANGAN.wanita.foto;
+            document.getElementById('bride-name').innerText = DATA_UNDANGAN.wanita.namaLengkap;
+            document.getElementById('bride-child-of').innerText = DATA_UNDANGAN.wanita.anakKe;
+            document.getElementById('bride-parents').innerText = DATA_UNDANGAN.wanita.namaOrangTua;
+
+            // Event Section
+            document.getElementById('event-bg').style.backgroundImage = `url('${DATA_UNDANGAN.backgroundEvent}')`;
+            document.getElementById('maps-link').href = DATA_UNDANGAN.petaLink;
+
+            document.getElementById('akad-date').innerText = DATA_UNDANGAN.akad.tanggal;
+            document.getElementById('akad-time').innerText = DATA_UNDANGAN.akad.jam;
+            document.getElementById('akad-location').innerHTML = DATA_UNDANGAN.akad.lokasi;
+
+            document.getElementById('resepsi-date').innerText = DATA_UNDANGAN.resepsi.tanggal;
+            document.getElementById('resepsi-time').innerText = DATA_UNDANGAN.resepsi.jam;
+            document.getElementById('resepsi-location').innerHTML = DATA_UNDANGAN.resepsi.lokasi;
+
+            // --- TURUT MENGUNDANG & HIBURAN (New Logic) ---
+            const sectionSpecial = document.getElementById('special-info');
+            const turutDiv = document.getElementById('turut-mengundang-container');
+            const hiburanDiv = document.getElementById('hiburan-container');
+            let hasSpecial = false;
+
+            if (DATA_UNDANGAN.turutMengundang && DATA_UNDANGAN.turutMengundang.length > 0) {
+                hasSpecial = true;
+                turutDiv.classList.remove('hidden');
+                const listContainer = document.getElementById('turut-mengundang-list');
+                DATA_UNDANGAN.turutMengundang.forEach(item => {
+                    const p = document.createElement('p');
+                    p.innerText = item;
+                    listContainer.appendChild(p);
+                });
             }
+
+            if (DATA_UNDANGAN.hiburan) {
+                hasSpecial = true;
+                hiburanDiv.classList.remove('hidden');
+                document.getElementById('hiburan-text').innerHTML = DATA_UNDANGAN.hiburan;
+            }
+
+            if (hasSpecial) {
+                sectionSpecial.classList.remove('hidden');
+            }
+
+            // Gift Section
+            document.getElementById('bank1-name').innerText = DATA_UNDANGAN.bank1.namaBank;
+            document.getElementById('bank1-number').innerText = DATA_UNDANGAN.bank1.nomorRekening;
+            document.getElementById('bank1-owner').innerText = DATA_UNDANGAN.bank1.atasNama;
+
+            document.getElementById('bank2-name').innerText = DATA_UNDANGAN.bank2.namaBank;
+            document.getElementById('bank2-number').innerText = DATA_UNDANGAN.bank2.nomorRekening;
+            document.getElementById('bank2-owner').innerText = DATA_UNDANGAN.bank2.atasNama;
+
+            // Footer
+            document.getElementById('footer-groom').innerText = DATA_UNDANGAN.pria.inisial;
+            document.getElementById('footer-bride').innerText = DATA_UNDANGAN.wanita.inisial;
+            document.getElementById('footer-names').innerText = `${DATA_UNDANGAN.pria.namaPanggilan} & ${DATA_UNDANGAN.wanita.namaPanggilan}`;
+        }
+
+        // --- FUNGSI NAMA TAMU (URL PARAMETER) ---
+        function checkGuestName() {
+            // Mengambil parameter URL
+            const urlParams = new URLSearchParams(window.location.search);
+            // Cek keyword: 'to', 'guest', atau 'kepada'
+            const guestName = urlParams.get('to') || urlParams.get('guest') || urlParams.get('kepada');
+            
+            const guestContainer = document.getElementById('guest-name');
+            const rsvpNameInput = document.getElementById('name');
+
+            if (guestName) {
+                // Mencegah XSS sederhana dengan replace karakter html
+                const cleanName = guestName.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                guestContainer.innerText = cleanName;
+                
+                // Auto isi form RSVP jika ada nama tamu
+                if(rsvpNameInput) {
+                    rsvpNameInput.value = cleanName;
+                }
+            } else {
+                guestContainer.innerText = "Tamu Undangan"; // Default jika tidak ada nama
+            }
+        }
+
+        // --- SPARKLE EFFECT ---
+        function createSparkles() {
+            const container = document.getElementById('particle-container');
+            const particleCount = 20;
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(createParticle, Math.random() * 3000);
+            }
+        }
+
+        function createParticle() {
+            const container = document.getElementById('particle-container');
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = Math.random() * 100 + '%';
+            const duration = Math.random() * 5 + 5; 
+            particle.style.animationDuration = duration + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            container.appendChild(particle);
         }
 
         // --- OPENING ---
         function openInvitation() {
             const overlay = document.getElementById('opening-overlay');
-            const content = document.getElementById('opening-content');
             const main = document.getElementById('main-content');
             const audio = document.getElementById('bg-music');
 
@@ -552,35 +643,17 @@
                 audio.volume = 0.5;
                 audio.play().catch(e => console.log("Audio autoplay prevented"));
             }
-
-            // Hide content first
-            content.style.opacity = '0';
-            content.style.transform = 'translateY(20px)';
             
-            // Trigger Curtain Open
-            setTimeout(() => {
-                overlay.classList.add('is-open');
-            }, 600);
-
-            // Show Main Content
+            overlay.classList.add('is-open');
             setTimeout(() => {
                 main.classList.remove('opacity-0');
                 document.body.classList.remove('modal-open');
-                
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                }, 2100); // Wait for curtain transition
-
-                // Init Scroll Animation
-                AOS.init({
-                    duration: 1000,
-                    once: true,
-                    offset: 80,
-                }); 
-            }, 1200);
+                setTimeout(() => { overlay.style.display = 'none'; }, 2000);
+                AOS.init({ duration: 1200, once: true, offset: 50 }); 
+            }, 800);
         }
 
-        // --- MUSIC ---
+        // --- MUSIC TOGGLE ---
         function toggleMusic() {
             const audio = document.getElementById('bg-music');
             const icon = document.getElementById('icon-music');
@@ -588,16 +661,18 @@
                 audio.play();
                 icon.classList.add('animate-spin-slow');
                 icon.style.opacity = '1';
+                icon.style.color = '#D4AF37';
             } else {
                 audio.pause();
                 icon.classList.remove('animate-spin-slow');
                 icon.style.opacity = '0.5';
+                icon.style.color = '#888';
             }
         }
 
         // --- COUNTDOWN ---
         function initCountdown() {
-            const target = new Date("2026-03-10T08:00:00+07:00").getTime();
+            const target = new Date(DATA_UNDANGAN.targetWaktuCountdown).getTime();
             const el = document.getElementById('countdown');
             
             setInterval(() => {
@@ -605,7 +680,7 @@
                 const diff = target - now;
 
                 if (diff < 0) {
-                    el.innerHTML = "<div class='text-silver font-cinzel text-xl'>Alhamdulillah, Acara Telah Dimulai</div>";
+                    el.innerHTML = "<div class='text-xl font-cinzel text-gold-300'>ACARA TELAH SELESAI</div>";
                     return;
                 }
 
@@ -614,27 +689,15 @@
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
 
-                const boxClass = "flex flex-col items-center justify-center bg-navy-900/40 border border-silver/30 w-16 h-16 md:w-20 md:h-20 rounded-sm backdrop-blur-sm";
-                const numClass = "text-xl md:text-2xl font-cinzel text-silver";
-                const labelClass = "text-[9px] uppercase tracking-widest text-blue-200 mt-1";
-                
+                const boxStyle = "flex flex-col items-center justify-center w-16 h-16 md:w-20 md:h-20 border border-gold-500/20 bg-black/40 backdrop-blur-sm rounded-sm";
+                const numStyle = "text-xl md:text-3xl font-cinzel text-gold-100";
+                const labelStyle = "text-[8px] md:text-[10px] uppercase tracking-widest text-gray-400 mt-1";
+
                 el.innerHTML = `
-                    <div class="${boxClass}">
-                        <span class="${numClass}">${d}</span>
-                        <span class="${labelClass}">Hari</span>
-                    </div>
-                    <div class="${boxClass}">
-                        <span class="${numClass}">${h}</span>
-                        <span class="${labelClass}">Jam</span>
-                    </div>
-                    <div class="${boxClass}">
-                        <span class="${numClass}">${m}</span>
-                        <span class="${labelClass}">Menit</span>
-                    </div>
-                    <div class="${boxClass} border-silver animate-pulse-slow">
-                        <span class="${numClass}">${s}</span>
-                        <span class="${labelClass}">Detik</span>
-                    </div>
+                    <div class="${boxStyle}"><span class="${numStyle}">${d}</span><span class="${labelStyle}">Hari</span></div>
+                    <div class="${boxStyle}"><span class="${numStyle}">${h}</span><span class="${labelStyle}">Jam</span></div>
+                    <div class="${boxStyle}"><span class="${numStyle}">${m}</span><span class="${labelStyle}">Menit</span></div>
+                    <div class="${boxStyle}"><span class="${numStyle}">${s}</span><span class="${labelStyle}">Detik</span></div>
                 `;
             }, 1000);
         }
@@ -647,55 +710,67 @@
             const pax = document.getElementById('pax').value;
             const msg = document.getElementById('message').value;
 
-            const phone = "6285161141114";
-            const text = `*Konfirmasi Kehadiran (Sapphire Edition)*%0A%0ANama: ${name}%0AStatus: ${status}%0AJumlah: ${pax} Orang%0A%0A"${msg}"%0A%0ATerima Kasih.`;
-            
-            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+            const text = `*Konfirmasi Kehadiran*%0A%0ANama: ${name}%0AStatus: ${status}%0AJumlah: ${pax} Orang%0A%0A"${msg}"%0A%0ASampai jumpa di hari bahagia!`;
+            window.open(`https://wa.me/${DATA_UNDANGAN.nomorWhatsApp}?text=${text}`, '_blank');
         }
 
-        // --- CLIPBOARD ---
+        // --- COPY BANK (FIXED VERSION) ---
+        function copyBank1() { copyToClipboard(DATA_UNDANGAN.bank1.nomorRekening, DATA_UNDANGAN.bank1.namaBank); }
+        function copyBank2() { copyToClipboard(DATA_UNDANGAN.bank2.nomorRekening, DATA_UNDANGAN.bank2.namaBank); }
+
         function copyToClipboard(text, label) {
+            // Fallback method using textarea for better compatibility
             const textArea = document.createElement("textarea");
-            textArea.value = text;
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.position = "fixed";
+            textArea.value = text.replace(/\s/g, '');
             document.body.appendChild(textArea);
-            textArea.focus();
             textArea.select();
-
+            
             try {
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Disalin',
-                        text: `Nomor ${label} berhasil disalin`,
-                        background: '#020617',
-                        color: '#f1f5f9',
-                        confirmButtonColor: '#0ea5e9',
-                        timer: 1500,
-                        showConfirmButton: false
-                    });
-                } else {
-                     Swal.fire({
-                        icon: 'error',
-                        title: 'Gagal',
-                        text: 'Gagal menyalin, silakan salin manual.',
-                         background: '#020617',
-                        color: '#f1f5f9',
-                    });
-                }
+                document.execCommand('copy');
+                Swal.fire({
+                    icon: 'success', title: 'Tersalin', text: `Nomor ${label} berhasil disalin`,
+                    background: '#111', color: '#D4AF37', confirmButtonColor: '#D4AF37', timer: 1500, showConfirmButton: false
+                });
             } catch (err) {
-                console.error('Fallback: Oops, unable to copy', err);
+                console.error('Gagal menyalin', err);
+                Swal.fire({
+                    icon: 'error', title: 'Gagal', text: 'Gagal menyalin teks otomatis',
+                    background: '#111', color: '#D4AF37'
+                });
             }
-
             document.body.removeChild(textArea);
         }
 
+        // --- UNPAID POPUP --- 
+        function showUnpaidPopup() {
+            Swal.fire({
+                title: 'Undangan Belum Aktif',
+                text: "Status undangan ini belum lunas. Silahkan hubungi admin untuk mengaktifkan fitur lengkap, atau lanjutkan untuk melihat preview.",
+                icon: 'info',
+                background: '#111',
+                color: '#e5e5e5',
+                confirmButtonText: 'Hubungi Admin',
+                confirmButtonColor: '#D4AF37',
+                showCancelButton: true,       // Menampilkan tombol kedua
+                cancelButtonText: 'Lihat Preview', // Label tombol kedua
+                cancelButtonColor: '#333',
+                allowOutsideClick: false,
+                allowEscapeKey: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika klik Hubungi Admin
+                    window.open(`https://wa.me/${DATA_UNDANGAN.nomorAdmin}?text=Halo%20Admin%2C%20saya%20mau%20melakukan%20pelunasan%20undangan%20Waris%20%26%20Farhah`, '_blank');
+                }
+                // Jika klik Lihat Preview (Cancel), popup akan tertutup otomatis dan user bisa melihat undangan
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
-            createDust();
+            renderInvitation(); 
             initCountdown();
+            createSparkles();
+            checkGuestName(); // <--- FUNGSI BARU DIJALANKAN DISINI
+            showUnpaidPopup();
         });
     </script>
 </body>
